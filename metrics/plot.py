@@ -1,28 +1,21 @@
 import pickle as pkl
-import argparse
-import plotly.express as px
+import sys
 import numpy as np
+import pandas as pd
+from metrics import confusion_matrix_analysis
 
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
+import plotly.express as px
 import dash_table
-import pandas as pd
 
-from metrics import confusion_matrix_analysis
-
-parser = argparse.ArgumentParser(description="Plot confusion_matrix")
-parser.add_argument('--file_name', type=str,
-                    help="Confusion matrix file")
-
-args = parser.parse_args()
-config = parser.parse_args()
-config = vars(config)
+file_name = sys.argv[1]
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-with open(config['file_name'], 'rb') as f:
+with open(file_name, 'rb') as f:
     data = pkl.load(f)
     global cm
     cm = data[0]

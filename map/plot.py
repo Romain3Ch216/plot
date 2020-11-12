@@ -1,7 +1,6 @@
-import argparse
 import plotly.express as px
 import pickle as pkl
-
+import sys
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -9,8 +8,6 @@ from dash.dependencies import Input, Output
 
 import torch
 import numpy as np
-
-import pdb
 
 def convert_to_color_(arr_2d, palette=None):
     """Convert an array of labels to RGB color-encoded image.
@@ -33,15 +30,9 @@ def convert_to_color_(arr_2d, palette=None):
 
     return arr_3d
 
-parser = argparse.ArgumentParser(description="Plot confusion_matrix")
-parser.add_argument('--map', type=str,
-                    help="Probability map file")
+map = sys.argv[1]
 
-args = parser.parse_args()
-config = parser.parse_args()
-config = vars(config)
-
-with open(args.map, 'rb') as f:
+with open(map, 'rb') as f:
     data = pkl.load(f)
     probs, labels_, colors, rgb = data[0], data[1], data[2], data[3]
 
