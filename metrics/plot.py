@@ -62,12 +62,14 @@ def update_graph(mode):
     if mode == 'raw':
         data = cm
     elif mode == 'pred':
-        data = cm / (np.sum(cm, axis=0)+1e-20)
+        data = 100 * cm / (np.sum(cm, axis=0)+1e-20)
+        data = np.array(data).astype(int)
     elif mode == 'gt':
-        data = cm / (np.sum(cm, axis=1)+1e-20)
+        data = 100 * cm.T / (np.sum(cm, axis=1)+1e-20)
+        data = np.array(data.T).astype(int)
 
     fig = px.imshow(img=data,
-                    labels=dict(x="Prediction", y="Ground Truth"),
+                    labels=dict(x="Prediction", y="Ground Truth", z='Metric'),
                     x=labels,
                     y=labels,
                     height=750)
